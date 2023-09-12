@@ -1,11 +1,11 @@
-import { Box, Button, Flex } from '@chakra-ui/react';
-import Link from 'next/link';
+import { Box, Button, Flex } from "@chakra-ui/react";
+import Link from "next/link";
 
 const Header = () => {
   return (
     <Flex justify="space-between" p={8} boxShadow="md" bgColor={"green.200"}>
       <Box>
-        <p className='text-4xl'>Trash tagging</p>
+        <p className="text-4xl">Trash tagging</p>
       </Box>
       <Flex>
         <Link href="/">
@@ -13,21 +13,15 @@ const Header = () => {
             Home
           </Button>
         </Link>
-        <Link href="/how-it-works">
-          <Button variant="ghost" mr={2}>
-            How It Works
-          </Button>
-        </Link>
+        <Button variant="ghost" mr={2}>
+          How It Works
+        </Button>
         <Link href="/complain">
           <Button variant="ghost" mr={2}>
             Complaint
           </Button>
         </Link>
-        <Link href="/contact">
-          <Button variant="ghost">
-            Contact
-          </Button>
-        </Link>
+        <Button variant="ghost">Contact</Button>
       </Flex>
     </Flex>
   );
