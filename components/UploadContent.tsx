@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Box, Button, Image, Input, VStack, HStack, Text, Heading, FormControl, FormLabel, useToast, SimpleGrid } from '@chakra-ui/react';
 import { ChakraProvider, Fade } from '@chakra-ui/react';
-import theme from './theme';
 import Header from './Header';
 import Footer from './Footer';
 
 type ImageDetails = {
-  imageUrl: string;
-  location: string;
-};
-
+    complaintNumber: number;
+    dateOfComplaint: string;
+    timeOfComplaint: string;
+    imageUrl: string;
+    location: string;
+    status: 'submitted';
+  };
+  
 const UploadContent = () => {
 
     const [imageDetails, setImageDetails] = useState<ImageDetails[]>([]);
@@ -28,69 +31,105 @@ const UploadContent = () => {
 
   const handleUpload = () => {
     if (currentImage && location) {
-      setImageDetails([...imageDetails, { imageUrl: currentImage, location }]);
+      const currentDate = new Date();
+      const complaintNumber = imageDetails.length + 1; // Assign unique complaint numbers incrementally
+  
+      setImageDetails([...imageDetails, {
+        complaintNumber,
+        dateOfComplaint: currentDate.toLocaleDateString(),
+        timeOfComplaint: currentDate.toLocaleTimeString(),
+        imageUrl: currentImage,
+        location,
+        status: 'submitted'
+      }]);
+  
       setCurrentImage(null);
       setLocation("");
     }
+  
     toast({
-      title: "Image uploaded successfully.",
+      title: "Complaint registered successfully.",
       description: "Your trash image and location are saved.",
       status: "success",
       duration: 3000,
       isClosable: true,
     });
   };
+  
 
   return (
-    <VStack
-      spacing={0}
-      align="stretch"
-      bg={`url('https://path-to-your-background-image.jpg') no-repeat center center`}
-      bgSize="cover"
-      h="100vh"
-    >
+    <VStack spacing={0} align="stretch" h="100vh">
       <Header />
       <Fade in={true}>
-        <Box
-          w="100%"
-          m="0 auto"
-          p={4}
-          bg="white"
-          borderRadius="md"
-          boxShadow="lg"
-        >
-          <SimpleGrid columns={2} spacing={10} p={4} gridTemplateColumns="2fr 3fr" >
-            <VStack align="start" spacing={4} borderRight={"4px"} pr={4}>
-              <Heading>Upload Trash</Heading>
-              <FormControl>
+        <SimpleGrid columns={2} spacing={10} p={4} gridTemplateColumns="1fr 3fr">
+          
+          {/* Thin Box for Uploading */}
+          <Box                     
+            borderWidth="1px" 
+            borderRadius="lg" 
+
+            p={4} 
+            w="100%" 
+            shadow="xl"
+            boxShadow="6px 6px 6px 0px rgba(16,185,129,0.6)">
+            <VStack align="start" spacing={4} h="2xl">
+                <Heading>Register a Complaint</Heading>
+                <FormControl>
                 <FormLabel>Upload Image</FormLabel>
-                <Input type="file" accept="image/*" onChange={handleImageChange} />
-              </FormControl>
-              <FormControl mt={4}>
+                <Input pt={"4px"} type="file" accept="image/*" onChange={handleImageChange} />
+                </FormControl>
+                <FormControl mt={4}>
                 <FormLabel>Location</FormLabel>
                 <Input value={location} onChange={(e) => setLocation(e.target.value)} />
-              </FormControl>
-              <Button mt={4} onClick={handleUpload}>
-                Upload
-              </Button>
+                </FormControl>
+                <Button mt={4} onClick={handleUpload}>
+                Submit
+                </Button>
             </VStack>
+          </Box>
+          
+          {/* Fat Box for Complaints */}
+         {/* Fat Box for Complaints */}
+         <Box
+            borderWidth="1px" 
+            borderRadius="lg" 
+            p={4} 
+            w="100%" 
+            shadow="xl"
+            boxShadow="6px 6px 6px 0px rgba(16,185,129,0.6)">
             <VStack align="start" spacing={4}>
-              <Heading>Uploaded Trash Details</Heading>
-              <VStack spacing={4} w="100%">
-                {imageDetails.map((detail, index) => (
-                  <Box key={index} borderWidth="1px" borderRadius="lg" p={4} w="100%">
+            <Heading>Complaint Details</Heading>
+            <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4} w="100%">
+                {imageDetails.map((detail) => (
+                <Box 
+                    key={detail.complaintNumber} 
+                    borderWidth="1px" 
+                    borderRadius="lg" 
+                    p={4} 
+                    w="100%" 
+                    shadow="md"
+                    _hover={{ shadow: "xl", transform: "translateY(-4px)", transition: "0.3s" }}
+                >
+                    <Text><b>Complaint No : </b>{detail.complaintNumber}</Text>
+                    <Text><b>Date: </b>{detail.dateOfComplaint}</Text>
+                    <Text><b>Time: </b>{detail.timeOfComplaint}</Text>
+                    <Box mt={2} mb={2}>
                     <Image src={detail.imageUrl} alt="Uploaded Trash" boxSize="200px" />
-                    <Text mt={2}>Location: {detail.location}</Text>
-                  </Box>
+                    </Box>
+                    <Text><b>Location: </b>{detail.location}</Text>
+                    <Text><b>Status: </b>{detail.status}</Text>
+                </Box>
                 ))}
-              </VStack>
+            </SimpleGrid>
             </VStack>
-          </SimpleGrid>
-        </Box>
+         </Box>
+
+        </SimpleGrid>
       </Fade>
       <Footer />
     </VStack>
-);
+  );
+  
 
 };
 
