@@ -14,28 +14,28 @@ const Header = () => {
 
   return (
     <>
-      <Flex justify="space-between" m={5} p={2} borderRadius={"xl"} boxShadow="md" bgColor={"green.200"}>
+      <Flex justify="space-between" m={5} p={2} borderRadius={"xl"} boxShadow="md" bgColor={"black"} >
         <Box>
           <Image src={enviroconnect} alt="EnviroConnect" width={200} height={50} />
         </Box>
-        <Flex mt="3">
+        <Flex mt="3" >
           <Link href="/">
-            <Button variant="ghost" mr={2}>
+            <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
               Home
             </Button>
           </Link>
-          <Button variant="ghost" mr={2}>
+          <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
             How It Works
           </Button>
           <Link href="/complain">
-            <Button variant="ghost" mr={2}>
+            <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
               Complaint
             </Button>
           </Link>
-          <Button variant="ghost" mr={2}>
+          <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
             Contact
           </Button>
-          <Button variant="outline" onClick={onOpen}>
+          <Button color={"whiteAlpha.900"} variant="outline" onClick={onOpen}>
             Sign In
           </Button>
         </Flex>
