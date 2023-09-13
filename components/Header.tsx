@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Input, FormControl, FormLabel } from "@chakra-ui/react";
+import { Box, Button, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Input, FormControl, FormLabel, color } from "@chakra-ui/react";
 import { useState } from 'react';
 import Link from "next/link";
 import Image from "next/image";
@@ -25,7 +25,7 @@ const Header = () => {
           </Box>
           <Flex mt="3" >
             <Link href="/">
-              <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
+              <Button color={"whiteAlpha.900"} bgColor={"whiteAlpha.100"} _hover={{color:"black" , bgColor:"whiteAlpha.800"}} variant="ghost" mr={2}>
                 Home
               </Button>
             </Link>
@@ -36,10 +36,10 @@ const Header = () => {
                 </Button>
               </Link>
             )}
-            <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
+            <Button color={"whiteAlpha.900"} bgColor={"whiteAlpha.100"} _hover={{color:"black" , bgColor:"whiteAlpha.800"}} variant="ghost" mr={2}>
               Contact
             </Button>
-            <Button color={"whiteAlpha.900"} variant="outline" onClick={onOpen}>
+            <Button color={"whiteAlpha.900"} bgColor={"whiteAlpha.100"} _hover={{color:"black" , bgColor:"whiteAlpha.800"}} variant="solid" onClick={onOpen}>
               Sign In
             </Button>
           </Flex>

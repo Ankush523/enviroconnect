@@ -102,23 +102,23 @@ const UploadContent = () => {
     <VStack spacing={0} align="stretch" h="100vh">
       <Header />
       <Fade in={true}>
-        <SimpleGrid columns={2} spacing={10} p={4} gridTemplateColumns="1fr 3fr">
+        <SimpleGrid columns={2} spacing={10} px={6} gridTemplateColumns="1fr 3fr">
           
           {/* Thin Box for Uploading */}
           <Box                     
             borderWidth="1px" 
-            borderRadius="lg" 
+            borderRadius="xl" 
 
             p={4} 
             w="100%" 
             shadow="xl"
-            boxShadow="6px 6px 6px 0px rgba(16,185,129,0.6)">
-            <VStack align="start" spacing={4} h="2xl">
+            boxShadow="8px 8px 8px 0px rgba(16,185,129,0.6)">
+            <VStack align="center" spacing={4} h="2xl">
                 <Heading>Upload Image</Heading>
                 <hr/>
                 <FormControl>
                 <FormLabel>Image</FormLabel>
-                <Input pt={"4px"} type="file" accept="image/*" onChange={handleImageChange} />
+                <Input h={"50px"} pt={"2"} type="file" accept="image/*" onChange={handleImageChange} />
                 </FormControl>
                 <FormControl mt={4}>
                 <FormLabel>Location</FormLabel>
@@ -134,13 +134,14 @@ const UploadContent = () => {
          {/* Fat Box for Complaints */}
          <Box
             borderWidth="1px" 
-            borderRadius="lg" 
+            borderRadius="xl" 
             p={4} 
             w="100%" 
             shadow="xl"
-            boxShadow="6px 6px 6px 0px rgba(16,185,129,0.6)">
-            <VStack align="start" spacing={4}>
-            <Heading>Complaint Details</Heading>
+            boxShadow="8px 8px 8px 0px rgba(16,185,129,0.6)">
+            <VStack align="center" spacing={4}>
+            <Heading>Submitted Complaints</Heading>
+            <hr/>
             <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4} w="100%">
                 {imageDetails.map((detail) => (
                 <Box 
@@ -149,8 +150,8 @@ const UploadContent = () => {
                     borderRadius="lg" 
                     p={4} 
                     w="100%" 
-                    shadow="md"
-                    _hover={{ shadow: "xl", transform: "translateY(-4px)", transition: "0.3s" }}
+                    shadow="lg"
+                    _hover={{ shadow: "2xl", transform: "translateY(-4px)", transition: "0.3s" }}
                 >
                    <Text><b>Complaint No : </b>{detail.complaintNumber}</Text>
                   <Text><b>Date: </b>{detail.dateOfComplaint}</Text>
