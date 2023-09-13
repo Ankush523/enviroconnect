@@ -3,6 +3,7 @@ import { Box, Button, Image, Input, VStack, HStack, Text, Heading, FormControl, 
 import { ChakraProvider, Fade } from '@chakra-ui/react';
 import Header from './Header';
 import Footer from './Footer';
+import axios from 'axios';
 
 type ImageDetails = {
     complaintNumber: number;
@@ -11,6 +12,7 @@ type ImageDetails = {
     imageUrl: string;
     location: string;
     status: 'submitted';
+    api_Response: any;
   };
   
 const UploadContent = () => {
@@ -18,6 +20,7 @@ const UploadContent = () => {
     const [imageDetails, setImageDetails] = useState<ImageDetails[]>([]);
     const [currentImage, setCurrentImage] = useState<string | null>(null);
     const [location, setLocation] = useState<string>("");
+    const [apiResponse, setApiResponse] = useState<any>(null);
     const toast = useToast();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,32 +32,63 @@ const UploadContent = () => {
     };
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (currentImage && location) {
-      const currentDate = new Date();
-      const complaintNumber = imageDetails.length + 1; // Assign unique complaint numbers incrementally
-  
-      setImageDetails([...imageDetails, {
-        complaintNumber,
-        dateOfComplaint: currentDate.toLocaleDateString(),
-        timeOfComplaint: currentDate.toLocaleTimeString(),
-        imageUrl: currentImage,
-        location,
-        status: 'submitted'
-      }]);
-  
-      setCurrentImage(null);
-      setLocation("");
+        const currentDate = new Date();
+        const complaintNumber = imageDetails.length + 1;
+
+        // Start by making the API call
+        try {
+            const response = await axios({
+                method: "POST",
+                url: "https://detect.roboflow.com/garbage-classification-qmp4x/11",
+                params: {
+                    api_key: "UZKg5qOB4uV1SEipe4ec"
+                },
+                data: currentImage.split(',')[1],  // Splitting to send only the Base64 data without the prefix (data:image/png;base64,)
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            });
+
+            if (response && response.data) {
+                console.log(response.data?.predictions[0]?.class); // You can further process this data if needed
+                setApiResponse(response.data?.predictions[0]?.class);
+            }
+
+            setImageDetails([...imageDetails, {
+                complaintNumber,
+                dateOfComplaint: currentDate.toLocaleDateString(),
+                timeOfComplaint: currentDate.toLocaleTimeString(),
+                imageUrl: currentImage,
+                location,
+                status: 'submitted',
+                api_Response : response.data?.predictions[0]?.class,  // Storing the API response, if you want to display any specific data from it.
+            }]);
+
+            setCurrentImage(null);
+            setLocation("");
+
+            toast({
+                title: "Complaint registered successfully.",
+                description: "Your trash image and location are saved.",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+
+        } catch (error : any) {
+            console.error("Error uploading image:", error.message);
+            toast({
+                title: "Error uploading image.",
+                description: error.message,
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        }
     }
-  
-    toast({
-      title: "Complaint registered successfully.",
-      description: "Your trash image and location are saved.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
-  };
+};
   
 
   return (
@@ -111,14 +145,16 @@ const UploadContent = () => {
                     shadow="md"
                     _hover={{ shadow: "xl", transform: "translateY(-4px)", transition: "0.3s" }}
                 >
-                    <Text><b>Complaint No : </b>{detail.complaintNumber}</Text>
-                    <Text><b>Date: </b>{detail.dateOfComplaint}</Text>
-                    <Text><b>Time: </b>{detail.timeOfComplaint}</Text>
-                    <Box mt={2} mb={2}>
-                    <Image src={detail.imageUrl} alt="Uploaded Trash" boxSize="200px" />
-                    </Box>
-                    <Text><b>Location: </b>{detail.location}</Text>
-                    <Text><b>Status: </b>{detail.status}</Text>
+                   <Text><b>Complaint No : </b>{detail.complaintNumber}</Text>
+                  <Text><b>Date: </b>{detail.dateOfComplaint}</Text>
+                  <Text><b>Time: </b>{detail.timeOfComplaint}</Text>
+                  <Box mt={2} mb={2}>
+                      <Image src={detail.imageUrl} alt="Uploaded Trash" boxSize="200px" />
+                  </Box>
+                  <Text><b>Location: </b>{detail.location}</Text>
+                  <Text><b>Status: </b>{detail.status}</Text>
+                  {/* Example to display a specific field from the response, adjust accordingly */}
+                  {detail.api_Response && <Text><b>Trash category: </b>{(detail.api_Response)}</Text>}
                 </Box>
                 ))}
             </SimpleGrid>
