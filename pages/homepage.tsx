@@ -1,9 +1,9 @@
-import { Box, Heading, VStack, Center,Text } from '@chakra-ui/react';
-import Header from './Header';
+import { Box, Heading, VStack, Center, Text } from "@chakra-ui/react";
+import Header from "../components/Header";
 
 const Homepage = () => {
   return (
-    <Box 
+    <Box
       bgImage="url(/trash.png)"
       bgPos="center"
       bgRepeat="no-repeat"
@@ -15,7 +15,7 @@ const Homepage = () => {
 
         <Center flexGrow={1}>
           <Box
-            pos="relative" 
+            pos="relative"
             bg="transparent"
             p={8}
             borderRadius="md"
@@ -24,7 +24,7 @@ const Homepage = () => {
             textAlign="center"
           >
             {/* This creates the blurred and darkened background for the text and heading */}
-            <Box 
+            <Box
               content='""'
               pos="absolute"
               top={0}
@@ -36,7 +36,7 @@ const Homepage = () => {
               borderRadius="lg"
               zIndex={-1}
             />
-            <Heading 
+            <Heading
               size="2xl"
               fontWeight="bold"
               color="whiteAlpha.900"
@@ -44,13 +44,18 @@ const Homepage = () => {
             >
               Waste Handling
             </Heading>
-            <Text 
+            <Text
               fontSize="2xl"
               color="whiteAlpha.900"
               mt={4}
               fontFamily="Georgia, serif"
             >
-             A Digital platform that facilitates seamless reporting and resolution of waste management, encompassing waste recycling and energy generation, by connecting users directly with local authorities. This eliminates the need for traditional, cumbersome complaint procedures, providing a user-friendly avenue to address environmental concerns and focuses more on recycling wastes
+              A Digital platform that facilitates seamless reporting and
+              resolution of waste management, encompassing waste recycling and
+              energy generation, by connecting users directly with local
+              authorities. This eliminates the need for traditional, cumbersome
+              complaint procedures, providing a user-friendly avenue to address
+              environmental concerns and focuses more on recycling wastes
             </Text>
           </Box>
         </Center>
