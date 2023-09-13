@@ -121,7 +121,8 @@ const UploadContent = () => {
     <VStack spacing={0} align="stretch" h="100vh">
       <Header />
       <Fade in={true}>
-        <SimpleGrid columns={2} spacing={10} px={6} gridTemplateColumns="1fr 3fr">
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} px={6} gridTemplateColumns={{ base: "1fr", md: "1fr 3fr" }}>
+
           {/* Thin Box for Uploading */}
             <Box
                 borderWidth="1px"
@@ -206,7 +207,8 @@ const UploadContent = () => {
                   <Text><b>Date: </b>{detail.dateOfComplaint}</Text>
                   <Text><b>Time: </b>{detail.timeOfComplaint}</Text>
                   <Box mt={2} mb={2}>
-                      <Image src={detail.imageUrl} alt="Uploaded Trash" boxSize="200px" />
+                  <Image src={detail.imageUrl} alt="Uploaded Trash" boxSize={{ base: "150px", md: "200px" }} />
+
                   </Box>
                   <Text><b>Location: </b>{detail.location}</Text>
                   <Text><b>Status: </b>{detail.status}</Text>
@@ -232,8 +234,6 @@ const UploadContent = () => {
       <Footer />
     </VStack>
   );
-  
-
 };
 
 export default UploadContent;
