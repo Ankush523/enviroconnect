@@ -14,9 +14,9 @@ const Header = () => {
 
   return (
     <>
-      <Flex justify="space-between" m={5} p={2} borderRadius={"xl"} boxShadow="md" bgColor={"black"} >
+      <Flex justify="space-between" m={5} p={4} borderRadius={"xl"} boxShadow="md" bgColor={"black"} >
         <Box>
-          <Image src={enviroconnect} alt="EnviroConnect" width={200} height={50} />
+          <Image src={enviroconnect} alt="EnviroConnect" width={200} />
         </Box>
         <Flex mt="3" >
           <Link href="/">
