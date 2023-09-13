@@ -32,7 +32,7 @@ const Homepage = () => {
               right={0}
               bottom={0}
               bg="blackAlpha.600"
-              backdropFilter="blur(2px)"
+              backdropFilter="blur(5px)"
               borderRadius="lg"
               zIndex={-1}
             />
@@ -45,12 +45,12 @@ const Homepage = () => {
               Waste Handling
             </Heading>
             <Text 
-              fontSize="lg"
+              fontSize="2xl"
               color="whiteAlpha.900"
               mt={4}
               fontFamily="Georgia, serif"
             >
-              To create a cleaner, more sustainable environment by leveraging technology to empower communities and streamline the process of reporting and resolving trash and litter issues, ultimately fostering a sense of responsibility and engagement in environmental conservation.
+             A Digital platform that facilitates seamless reporting and resolution of waste management, encompassing waste recycling and energy generation, by connecting users directly with local authorities. This eliminates the need for traditional, cumbersome complaint procedures, providing a user-friendly avenue to address environmental concerns and focuses more on recycling wastes
             </Text>
           </Box>
         </Center>
