@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Button, Image, Input, VStack, HStack, Text, Heading, FormControl, FormLabel, useToast, SimpleGrid } from '@chakra-ui/react';
+import { Box, Button, Image, Input, VStack, HStack, Text, Heading, FormControl, FormLabel, useToast, SimpleGrid, Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/react';
 import { ChakraProvider, Fade } from '@chakra-ui/react';
 import Header from './Header';
 import Footer from './Footer';
 import axios from 'axios';
 import { useImage } from './ImageContext';
+import CapturePhoto from './CapturePhoto';
 
 type ImageDetails = {
     complaintNumber: number;
@@ -18,6 +19,7 @@ type ImageDetails = {
   
 const UploadContent = () => {
     const { imageDetails, setImageDetails } = useImage();
+    const [showLiveCaptureSubmit, setShowLiveCaptureSubmit] = useState(false);
 
     // const [imageDetails, setImageDetails] = useState<ImageDetails[]>([]);
     const [currentImage, setCurrentImage] = useState<string | null>(null);
@@ -33,6 +35,18 @@ const UploadContent = () => {
       setCurrentImage(reader.result as string);
     };
   };
+
+  const handleLiveCapture = (dataUrl: string) => {
+    setCurrentImage(dataUrl);
+    setShowLiveCaptureSubmit(true); // Show the submit button once the image is captured
+    toast({
+        title: "Image Captured Successfully.",
+        description: "Now, submit the complaint with the captured image.",
+        status: "info",
+        duration: 3000,
+        isClosable: true,
+    });
+};
 
   const handleUpload = async () => {
     if (currentImage && location) {
@@ -77,6 +91,10 @@ const UploadContent = () => {
             setCurrentImage(null);
             setLocation("");
 
+            setShowLiveCaptureSubmit(false);
+            setCurrentImage(null);
+            setLocation("");
+
             toast({
                 title: "Complaint registered successfully.",
                 description: "Your trash image and location are saved.",
@@ -104,35 +122,65 @@ const UploadContent = () => {
       <Header />
       <Fade in={true}>
         <SimpleGrid columns={2} spacing={10} px={6} gridTemplateColumns="1fr 3fr">
-          
           {/* Thin Box for Uploading */}
-          <Box                     
-            borderWidth="1px" 
-            borderRadius="xl" 
+            <Box
+                borderWidth="1px"
+                borderRadius="xl"
+                p={4}
+                w="100%"
+                shadow="xl"
+                boxShadow="8px 8px 8px 0px rgba(16,185,129,0.6)">
+                <Tabs variant="enclosed">
+                    <TabList>
+                        <Tab>Upload Image</Tab>
+                        <Tab>Live Capture</Tab>
+                    </TabList>
 
-            p={4} 
-            w="100%" 
-            shadow="xl"
-            boxShadow="8px 8px 8px 0px rgba(16,185,129,0.6)">
-            <VStack align="center" spacing={4} h="2xl">
-                <Heading>Upload Image</Heading>
-                <hr/>
-                <FormControl>
-                <FormLabel>Image</FormLabel>
-                <Input h={"50px"} pt={"2"} type="file" accept="image/*" onChange={handleImageChange} />
-                </FormControl>
-                <FormControl mt={4}>
-                <FormLabel>Location</FormLabel>
-                <Input value={location} onChange={(e) => setLocation(e.target.value)} />
-                </FormControl>
-                <Button mt={4} onClick={handleUpload}>
-                Submit
-                </Button>
-            </VStack>
-          </Box>
+                    <TabPanels>
+                        <TabPanel>
+                        <VStack align="center" spacing={4} h="2xl">
+                            <Heading>Upload Image</Heading>
+                            <hr/>
+                            <FormControl>
+                            <FormLabel>Image</FormLabel>
+                            <Input h={"50px"} pt={"2"} type="file" accept="image/*" onChange={handleImageChange} />
+                            </FormControl>
+                            <FormControl mt={4}>
+                            <FormLabel>Location</FormLabel>
+                            <Input value={location} onChange={(e) => setLocation(e.target.value)} />
+                            </FormControl>
+                            <Button mt={4} onClick={handleUpload}>
+                            Submit
+                            </Button>
+                        </VStack>
+                        </TabPanel>
+                        <TabPanel>
+                        <VStack align="center" spacing={4} h="2xl">
+                            <Heading>Live Capture</Heading>
+                            <hr />
+                            <CapturePhoto onCapture={handleLiveCapture} />
+
+                            {/* Render the submit button and location input based on the state */}
+                            {showLiveCaptureSubmit && (
+                                <>
+                                    <FormControl mt={4}>
+                                        <FormLabel>Location</FormLabel>
+                                        <Input value={location} onChange={(e) => setLocation(e.target.value)} />
+                                    </FormControl>
+                                    <Button mt={4} onClick={handleUpload}>
+                                        Submit
+                                    </Button>
+                                </>
+                            )}
+                        </VStack>
+                    </TabPanel>
+                    </TabPanels>
+                </Tabs>
+            </Box>
           
+
+
           {/* Fat Box for Complaints */}
-         {/* Fat Box for Complaints */}
          <Box
             borderWidth="1px" 
             borderRadius="xl" 
