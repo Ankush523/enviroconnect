@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from 'next/router';
-import enviroconnect from "../images/enviroconnect.png";
+import enviroconnect from "../images/recylink.png";
 
 
 const Header = () => {
@@ -24,9 +24,6 @@ const Header = () => {
               Home
             </Button>
           </Link>
-          <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
-            How It Works
-          </Button>
           <Link href="/complain">
             <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
               Complaint
