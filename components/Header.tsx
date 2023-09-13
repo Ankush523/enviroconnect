@@ -61,12 +61,24 @@ const Header = () => {
     const router = useRouter();
       
     const [signInType, setSignInType] = useState<string | null>(null); // 'user' or 'authority'
+    const [aadharNumber, setAadharNumber] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [authorityID, setAuthorityID] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
   
     const handleSignIn = () => {
       if (signInType === 'user') {
+        if (!aadharNumber || !phoneNumber) {
+          setErrorMessage("Please fill in all fields.");
+          return;
+        }
         onUserSignIn();
         router.push('/complain');  // Navigate to the complain page
       } else if (signInType === 'authority') {
+        if (!authorityID) {
+          setErrorMessage("Please fill in the Authority ID.");
+          return;
+        }
         router.push('/reviewComplaints');  // Navigate to the reviewComplaints page
       }
     };
@@ -107,6 +119,7 @@ const Header = () => {
           </ModalBody>
   
           <ModalFooter>
+            {errorMessage && <p>{errorMessage}</p>}
             {signInType && (
               <>
                 <Button colorScheme="blue" mr={3} onClick={handleSignIn}> 
