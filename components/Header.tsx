@@ -5,63 +5,70 @@ import Image from "next/image";
 import { useRouter } from 'next/router';
 import enviroconnect from "../images/recylink.png";
 
-
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const onOpen = () => setIsOpen(true);
-  const onClose = () => setIsOpen(false);
-
-  return (
-    <>
-      <Flex justify="space-between" m={5} p={4} borderRadius={"xl"} boxShadow="md" bgColor={"black"} >
-        <Box>
-          <Image src={enviroconnect} alt="EnviroConnect" width={200} />
-        </Box>
-        <Flex mt="3" >
-          <Link href="/">
+    const [isOpen, setIsOpen] = useState(false);
+    const [userSignedIn, setUserSignedIn] = useState(false);
+  
+    const onOpen = () => setIsOpen(true);
+    const onClose = () => setIsOpen(false);
+  
+    const handleUserSignIn = () => {
+      setUserSignedIn(true);
+      onClose();
+    };
+  
+    return (
+      <>
+        <Flex justify="space-between" m={5} p={4} borderRadius={"xl"} boxShadow="md" bgColor={"black"} >
+          <Box>
+            <Image src={enviroconnect} alt="EnviroConnect" width={200} />
+          </Box>
+          <Flex mt="3" >
+            <Link href="/">
+              <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
+                Home
+              </Button>
+            </Link>
+            {userSignedIn && (
+              <Link href="/complain">
+                <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
+                  Complaint
+                </Button>
+              </Link>
+            )}
             <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
-              Home
+              Contact
             </Button>
-          </Link>
-          <Link href="/complain">
-            <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
-              Complaint
+            <Button color={"whiteAlpha.900"} variant="outline" onClick={onOpen}>
+              Sign In
             </Button>
-          </Link>
-          <Button color={"whiteAlpha.900"} variant="ghost" mr={2}>
-            Contact
-          </Button>
-          <Button color={"whiteAlpha.900"} variant="outline" onClick={onOpen}>
-            Sign In
-          </Button>
+          </Flex>
         </Flex>
-      </Flex>
+  
+        <SignInModal isOpen={isOpen} onClose={onClose} onUserSignIn={handleUserSignIn} />
+      </>
+    );
+  };
 
-      <SignInModal isOpen={isOpen} onClose={onClose} />
-    </>
-  );
-};
-
-type SignInModalProps = {
+  type SignInModalProps = {
     isOpen: boolean;
     onClose: () => void;
+    onUserSignIn: () => void;
   };
   
-  const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose }) => {
+  
+  const SignInModal: React.FC<SignInModalProps> = ({ isOpen, onClose, onUserSignIn }) => {
     const router = useRouter();
-    
+      
     const [signInType, setSignInType] = useState<string | null>(null); // 'user' or 'authority'
   
     const handleSignIn = () => {
       if (signInType === 'user') {
-        // handle user sign-in logic (if any)
+        onUserSignIn();
+        router.push('/complain');  // Navigate to the complain page
       } else if (signInType === 'authority') {
-        // handle authority sign-in logic (if any)
+        router.push('/reviewComplaints');  // Navigate to the reviewComplaints page
       }
-      
-      onClose();
-      router.push('/complain');  // Navigate to the complain page
     };
   
     return (
