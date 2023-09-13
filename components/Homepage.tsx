@@ -3,16 +3,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Header from './Header';
 import trash_img from '../images/trash.png';
+import india from '../images/india.png';
 
 const Homepage = () => {
   return (
     <VStack spacing={0} align="stretch" h="200vh" >
       <Header/>
 
-      <SimpleGrid columns={2} p={8} spacing={10} flexGrow={1}>
-        <VStack align="start" spacing={4}>
+      <SimpleGrid columns={2} p={8} spacing={10} flexGrow={1} mt={"2%"}>
+        <VStack align="start" spacing={6}>
           <Heading 
             size="2xl"        // Increased font size
+            ml={"160px"}
             fontWeight="bold" // Bolder font weight
             fontFamily="Arial, sans-serif"  // Using Arial font-family as an example. You can replace this with any font you like.
           >
@@ -28,9 +30,9 @@ const Homepage = () => {
 
         <VStack align="center">
           <Image
-            src={trash_img}
+            src={india}
             alt="Waste Management"
-            width={400}
+            width={600}
           />
         </VStack>
       </SimpleGrid>

@@ -73,9 +73,10 @@ const UploadContent = () => {
             shadow="xl"
             boxShadow="6px 6px 6px 0px rgba(16,185,129,0.6)">
             <VStack align="start" spacing={4} h="2xl">
-                <Heading>Register a Complaint</Heading>
+                <Heading>Upload Image</Heading>
+                <hr/>
                 <FormControl>
-                <FormLabel>Upload Image</FormLabel>
+                <FormLabel>Image</FormLabel>
                 <Input pt={"4px"} type="file" accept="image/*" onChange={handleImageChange} />
                 </FormControl>
                 <FormControl mt={4}>
