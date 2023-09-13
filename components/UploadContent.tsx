@@ -4,12 +4,7 @@ import { ChakraProvider, Fade } from '@chakra-ui/react';
 import Header from './Header';
 import Footer from './Footer';
 import axios from 'axios';
-
 import { useImage } from './ImageContext';
-
-// Inside your UploadContent component:
-
-
 
 type ImageDetails = {
     complaintNumber: number;
@@ -63,15 +58,21 @@ const UploadContent = () => {
                 setApiResponse(response.data?.predictions[0]?.class);
             }
 
-            setImageDetails([...imageDetails, {
-                complaintNumber,
-                dateOfComplaint: currentDate.toLocaleDateString(),
-                timeOfComplaint: currentDate.toLocaleTimeString(),
-                imageUrl: currentImage,
-                location,
-                status: 'submitted',
-                api_Response : response.data,  // Storing the API response, if you want to display any specific data from it.
-            }]);
+            setImageDetails((prevDetails:any) => {
+              const newDetails = [...prevDetails, {
+                  complaintNumber,
+                  dateOfComplaint: currentDate.toLocaleDateString(),
+                  timeOfComplaint: currentDate.toLocaleTimeString(),
+                  imageUrl: currentImage,
+                  location,
+                  status: 'submitted',
+                  api_Response: response.data,
+              }];
+      
+              localStorage.setItem('imageDetails', JSON.stringify(newDetails));
+      
+              return newDetails;
+          });
 
             setCurrentImage(null);
             setLocation("");

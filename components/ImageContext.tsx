@@ -19,12 +19,21 @@ const ImageContext = React.createContext<ImageContextProps | undefined>(undefine
 
 export const ImageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [imageDetails, setImageDetails] = React.useState<ImageDetails[]>([]);
+
+    React.useEffect(() => {
+        const localImageDetails = localStorage.getItem('imageDetails');
+        const initialImageDetails = localImageDetails ? JSON.parse(localImageDetails) : [];
+        setImageDetails(initialImageDetails);
+    }, []); 
+
     return (
       <ImageContext.Provider value={{ imageDetails, setImageDetails }}>
         {children}
       </ImageContext.Provider>
     );
 };
+
+
 
 export const useImage = () => {
   const context = React.useContext(ImageContext);

@@ -39,9 +39,9 @@ const Header = () => {
             <Button color={"whiteAlpha.900"} bgColor={"black"} _hover={{color:"black" , bgColor:"whiteAlpha.800"}} variant="ghost" mr={2}>
               Contact
             </Button>
-            {/* <Button color={"whiteAlpha.900"} bgColor={"black"} _hover={{color:"black" , bgColor:"whiteAlpha.800"}} variant="solid" onClick={onOpen}>
+            <Button color={"whiteAlpha.900"} bgColor={"black"} _hover={{color:"black" , bgColor:"whiteAlpha.800"}} variant="solid" onClick={onOpen}>
               Sign In
-            </Button> */}
+            </Button>
           </Flex>
         </Flex>
   
