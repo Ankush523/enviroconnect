@@ -25,7 +25,7 @@
 const axios = require("axios");
 const fs = require("fs");
 
-const image = fs.readFileSync("../images/sample4.jpg", {
+const image = fs.readFileSync("../images/sample5.jpg", {
     encoding: "base64"
 });
 

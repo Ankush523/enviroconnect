@@ -5,6 +5,12 @@ import Header from './Header';
 import Footer from './Footer';
 import axios from 'axios';
 
+import { useImage } from './ImageContext';
+
+// Inside your UploadContent component:
+
+
+
 type ImageDetails = {
     complaintNumber: number;
     dateOfComplaint: string;
@@ -16,8 +22,9 @@ type ImageDetails = {
   };
   
 const UploadContent = () => {
+    const { imageDetails, setImageDetails } = useImage();
 
-    const [imageDetails, setImageDetails] = useState<ImageDetails[]>([]);
+    // const [imageDetails, setImageDetails] = useState<ImageDetails[]>([]);
     const [currentImage, setCurrentImage] = useState<string | null>(null);
     const [location, setLocation] = useState<string>("");
     const [apiResponse, setApiResponse] = useState<any>(null);
@@ -63,7 +70,7 @@ const UploadContent = () => {
                 imageUrl: currentImage,
                 location,
                 status: 'submitted',
-                api_Response : response.data?.predictions[0]?.class,  // Storing the API response, if you want to display any specific data from it.
+                api_Response : response.data,  // Storing the API response, if you want to display any specific data from it.
             }]);
 
             setCurrentImage(null);
@@ -154,7 +161,16 @@ const UploadContent = () => {
                   <Text><b>Location: </b>{detail.location}</Text>
                   <Text><b>Status: </b>{detail.status}</Text>
                   {/* Example to display a specific field from the response, adjust accordingly */}
-                  {detail.api_Response && <Text><b>Trash category: </b>{(detail.api_Response)}</Text>}
+                  {/* {detail.api_Response  && (
+                    <Text>
+                        <b>API Data: </b>
+                        {detail.api_Response.predictions.map((pred : any, index : any) => (
+                            <React.Fragment key={index}>
+                                {pred.class}{index !== detail.api_Response.predictions.length - 1 ? ', ' : ''}
+                            </React.Fragment>
+                        ))}
+                    </Text>
+                )} */}
                 </Box>
                 ))}
             </SimpleGrid>
