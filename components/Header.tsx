@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <>
-      <Flex justify="space-between" p={5} boxShadow="md" bgColor={"green.200"}>
+      <Flex justify="space-between" m={5} p={2} borderRadius={"xl"} boxShadow="md" bgColor={"green.200"}>
         <Box>
           <Image src={enviroconnect} alt="EnviroConnect" width={200} height={50} />
         </Box>
